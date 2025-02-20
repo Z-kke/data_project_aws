@@ -23,11 +23,15 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          python -m venv venv
+          source venv/bin/activate
           python -m pip install --upgrade pip
           pip install pytest
 
       - name: Run Tests
-        run: pytest
+        run: |
+          source venv/bin/activate
+          pytest
 
   terraform:
     runs-on: ubuntu-latest
