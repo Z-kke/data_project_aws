@@ -1,4 +1,4 @@
-from lambda_code.hello_lambda import lambda_handler
+from lambdas.hello_lambda import lambda_handler
 
 
 def test_lambda_handler():
