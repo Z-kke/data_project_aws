@@ -30,8 +30,8 @@ resource "aws_lambda_function" "hello_lambda" {
   handler          = "hello_lambda.lambda_handler"
   runtime          = "python3.9"
   role             = aws_iam_role.lambda_exec.arn
-  filename         = "${path.module}/../lambdas/hello_lambda.zip"
-  source_code_hash = filebase64sha256("${path.module}/../lambdas/hello_lambda.zip")
+  filename         = "${path.module}/../src/lambdas/hello_lambda.zip"
+  source_code_hash = filebase64sha256("${path.module}/../src/lambdas/hello_lambda.zip")
 }
 
 # This rule schedules your Lambda to run every 5 minutes.
