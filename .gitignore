@@ -12,3 +12,4 @@ wheels/
 # Terraform
 *.tfstate
 *.tfstate.backup
+*.tfstate.lock.hcl
