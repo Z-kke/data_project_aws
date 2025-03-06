@@ -7,7 +7,7 @@ import requests
 
 
 class DataIngestor:
-    def __init__(self, api_url, db_table):
+    def __init__(self, api_url, db_table="DataIngestionTable"):
         self.api_url = api_url
         self.db_table = db_table
 
@@ -37,7 +37,6 @@ class DataIngestor:
 
 def lambda_handler(event, context):
     api_url = os.environ.get("API_URL", "https://opentdb.com/api.php?amount=10")
-    # Retrieve configuration from environment variables.
     db_table = os.environ.get("DB_TABLE", "DataIngestionTable")
 
     ingestor = DataIngestor(api_url, db_table)
