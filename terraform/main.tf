@@ -56,3 +56,15 @@ resource "aws_lambda_permission" "allow_cloudwatch" {
   principal     = "events.amazonaws.com"
   source_arn    = aws_cloudwatch_event_rule.lambda_schedule.arn
 }
+
+# Create a DynamoDB table in on-demand (PAY_PER_REQUEST) mode,
+resource "aws_dynamodb_table" "data_table" {
+  name         = var.db_table_name
+  billing_mode = "PAY_PER_REQUEST" # Should be free tier friendly
+  hash_key     = "id"
+
+  attribute {
+    name = "id"
+    type = "S"
+  }
+}
