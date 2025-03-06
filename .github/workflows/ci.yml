@@ -9,9 +9,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -23,18 +20,19 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          python -m venv venv
-          source venv/bin/activate
           python -m pip install --upgrade pip
           pip install pytest
 
       - name: Run Tests
-        run: |
-          source venv/bin/activate
-          pytest
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: pytest
 
   terraform:
     runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -65,3 +63,8 @@ jobs:
       - name: Terraform Plan
         working-directory: ./terraform
         run: terraform plan
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        working-directory: ./terraform
+        run: terraform apply -auto-approve
