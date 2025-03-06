@@ -39,7 +39,7 @@ jobs:
 
       - name: Package Lambda Code
         run: |
-          cd lambdas
+          cd src/lambdas
           zip -j hello_lambda.zip hello_lambda.py
           cd ..
 
