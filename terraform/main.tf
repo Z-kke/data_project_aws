@@ -34,3 +34,25 @@ resource "aws_lambda_function" "hello_lambda" {
   source_code_hash = filebase64sha256("${path.module}/../lambdas/hello_lambda.zip")
 }
 
+# This rule schedules your Lambda to run every 5 minutes.
+# A 5-minute interval is free-tier friendly.
+resource "aws_cloudwatch_event_rule" "lambda_schedule" {
+  name                = "hello_lambda_schedule"
+  schedule_expression = "rate(60 minutes)"
+}
+
+# This connects the schedule (event rule) to your Lambda function.
+resource "aws_cloudwatch_event_target" "lambda_target" {
+  rule      = aws_cloudwatch_event_rule.lambda_schedule.name
+  target_id = "hello_lambda_target"
+  arn       = aws_lambda_function.hello_lambda.arn
+}
+
+# This grants CloudWatch Events permission to invoke your Lambda.
+resource "aws_lambda_permission" "allow_cloudwatch" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.hello_lambda.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.lambda_schedule.arn
+}
