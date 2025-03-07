@@ -10,5 +10,11 @@ dependencies = [
     "boto3 (>=1.37.7,<2.0.0)",
 ]
 
-[tool.pytest.ini_options]
-pythonpath= ["src"]
+[tool.poetry]
+name = "data-project-aws"
+version = "0.1.0"
+description = "Just a test project"
+authors = ["Your Name <saku.arho@gmail.com>"]
+readme = "README.md"
+packages = [{ include = "src" }]
+
