@@ -25,6 +25,7 @@ jobs:
           poetry install --no-root
           poetry run pytest -v
 
+jobs:
   terraform:
     runs-on: ubuntu-latest
     env:
@@ -51,7 +52,7 @@ jobs:
 
       - name: Terraform Init
         working-directory: ./terraform
-        run: terraform init -backend=false
+        run: terraform init -upgrade
 
       - name: Terraform Validate
         working-directory: ./terraform
