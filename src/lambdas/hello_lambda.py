@@ -12,7 +12,7 @@ class DataIngestor:
         self.db_table = db_table
 
         # Initialize a DynamoDB resource using boto3.
-        self.dynamodb = boto3.resource("dynamodb")
+        self.dynamodb = boto3.resource("dynamodb", region_name="eu-north-1")
         self.table = self.dynamodb.Table(self.db_table)
 
     def fetch_data(self):
