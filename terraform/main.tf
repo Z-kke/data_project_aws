@@ -5,6 +5,12 @@ terraform {
       version = "~> 4.0"
     }
   }
+  backend "s3" {
+    bucket         = "terraform-state-bucket-534"      
+    key            = "terraform.tfstate"  # Path within the bucket to store state
+    region         = "eu-north-1"                           
+    dynamodb_table = "terraform-lock"  
+  }
 }
 
 provider "aws" {
