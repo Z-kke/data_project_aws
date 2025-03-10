@@ -74,3 +74,8 @@ resource "aws_dynamodb_table" "data_table" {
     type = "S"
   }
 }
+
+resource "aws_cloudwatch_log_group" "lambda_log_group" {
+  name              = "/aws/lambda/hello_lambda"
+  retention_in_days = 7 
+}
